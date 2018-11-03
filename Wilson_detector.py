@@ -77,10 +77,12 @@ def process_data():
     fft1 = fft(data)
     freqz = np.fft.fftfreq(len(fft1), 1 / RATE)
     abs_fft = np.abs(fft1)
-    #print (abs_fft[5:50],freqz[5:50])
+    # change values (abs_fft[5:50]) in frequency band freqz[5:50] if you changed ball or something else
+    # print (abs_fft[5:50],freqz[5:50]
     wynik = len([*filter(lambda x: x >= 3000000, abs_fft[5:50])])
 
-    if wynik > 10:
+# change this value in if statement if you want bigger threshold
+    if wynik > 15:
 
         print("'Wilson Trainer Tenis Ball' Detected!","Times:", i)
         i += 1
