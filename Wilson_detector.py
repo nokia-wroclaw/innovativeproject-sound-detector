@@ -19,33 +19,40 @@ try:
 except KeyboardInterrupt:
     print("You dont have nescessary libraries")
 
-i = 0
-f, ax = plt.subplots(2)
-
-# Arrange plot environment for data
-x = np.arange(10000)
-y = np.random.randn(10000)
-
-# Plot 0 is for raw audio data
-li, = ax[0].plot(x, y)
-ax[0].set_xlim(0, 4096)
-ax[0].set_ylim(-50000, 50000)
-ax[0].set_title("Raw microphone signal")
-# Plot 1 is for FFT of the audio
-li2, = ax[1].plot(x, y)
-ax[1].set_xlim(0, 15000)
-ax[1].set_ylim(0, 15000000)
-ax[1].set_title("Fast Fourier Transform")
-
-# Show the plot, but without blocking updates
-plt.pause(0.01)
-plt.tight_layout()
-
 # pyaudio constants
 FORMAT = pyaudio.paInt16  # We use 16 bit format per sample
-CHANNELS = 1
+CHANNELS = 2
 RATE = 44100
 CHUNK = 4096  # 8192 bytes of data read from a buffer
+
+
+i = 0
+# f, ax = plt.subplots(2)
+
+class Plots():
+
+    def __init__(self):
+        # Arrange plot environment for data
+        x = np.arange(10000)
+        y = np.random.randn(10000)
+        _, ax = plt.subplots(2)
+        # Plot 0 is for raw audio data
+        li, = ax[0].plot(x, y)
+        ax[0].set_xlim(0, 4096)
+        ax[0].set_ylim(-50000, 50000)
+        ax[0].set_title("Raw microphone signal")
+        self.raw_plot_content = li
+        # Plot 1 is for FFT of the audio
+        li2, = ax[1].plot(x, y)
+        ax[1].set_xlim(0, 15000)
+        ax[1].set_ylim(0, 15000000)
+        ax[1].set_title("Fast Fourier Transform")
+        self.fft_plot_content = li2
+
+        # Show the plot, but without blocking updates
+        plt.pause(0.01)
+        plt.tight_layout()
+
 
 audio = pyaudio.PyAudio()
 
@@ -55,17 +62,10 @@ stream = audio.open(format=FORMAT,
                     rate=RATE,
                     input=True)
 
+plots_container = Plots()
+
+
 #frames_per_buffer=CHUNK)
-
-global loop
-global in_data
-global audio_data
-
-
-loop = True
-
-
-
 
 def read_chunk():
     in_data = stream.read(CHUNK)
@@ -73,7 +73,7 @@ def read_chunk():
     return audio_data
 
 
-def process_data():
+def process_data(plots, data):
 
     global i
     fft1 = fft(data)
@@ -81,45 +81,46 @@ def process_data():
     abs_fft = np.abs(fft1)
     # change values (abs_fft[5:50]) in frequency band freqz[5:50] if you changed ball or something else
     # print (abs_fft[5:50],freqz[5:50]
-    wynik = len([*filter(lambda x: x >= 3000000, abs_fft[5:50])])
+    high_values = [x for x in abs_fft[5:50] if x >= 3000000]
+    result = len(high_values)
+    # wynik = len([*filter(lambda x: x >= 3000000, abs_fft[5:50])])
 
-# change this value in if statement if you want bigger threshold
-    if wynik > 15:
+    # change this value in if statement if you want bigger threshold
+    if result > 15:
 
         print("'Wilson Trainer Tenis Ball' Detected!","Times:", i)
         i += 1
 
     #print (wynik)
-    li.set_xdata(np.arange(len(data)))
-    li.set_ydata(data)
-    li2.set_xdata(np.arange(len(freqz))*10.)
-    li2.set_ydata(abs_fft)
-
-
+    plots.raw_plot_content.set_xdata(np.arange(len(data)))
+    plots.raw_plot_content.set_ydata(data)
+    plots.fft_plot_content.set_xdata(np.arange(len(freqz))*10.)
+    plots.fft_plot_content.set_ydata(abs_fft)
 
     # Show the updated plot, but without blocking
     plt.pause(0.01)
-    if loop:
-        return True
-    else:
-        return False
 
+
+def shutdown():
+    stream.stop_stream()
+    stream.close()
+    audio.terminate()
+    
 
 # Open the connection and start streaming the data
 stream.start_stream()
 
 print("| Press Ctrl+C to Break Recording |")
 
+
+is_running = True
 # Main Loop so program doesn't end while the stream is opened
-while loop:
+while is_running:
     try:
         data = read_chunk()
-        process_data()
+        process_data(data)
     except KeyboardInterrupt:
-        loop = False
+        shutdown()
+        is_running = False
     except :
         pass
-
-stream.stop_stream()
-stream.close()
-audio.terminate()
