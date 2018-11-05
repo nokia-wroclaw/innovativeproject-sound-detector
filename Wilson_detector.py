@@ -1,3 +1,4 @@
+#!/usr/bin/env python
 # Wilson - a ball that is dropped on the table if microphone is mounted near table.
 # The Ball generates specific sound between 100 - 500 Hz
 # I just wrote simple function to "catch" desired frequency at some threshold
@@ -24,63 +25,61 @@ RATE = 44100
 CHUNK = 4096  # 8192 bytes of data read from a buffer
 
 
-audio = pyaudio.PyAudio()
-
-#start Recording
-stream = audio.open(format=FORMAT,
-                    channels=CHANNELS,
-                    rate=RATE,
-                    input=True)
-
-#frames_per_buffer=CHUNK)
-
-detector_state = DetectorState()
-plots_state = PlotsState()
-
-def read_chunk():
+def read_chunk(stream):
     in_data = stream.read(CHUNK)
     audio_data = np.fromstring(in_data, np.int16)
     return audio_data
 
 
-def process_data(data):
+def process_data(detector_state, plots_state, data):
     fft1 = fft(data)
     freqz = np.fft.fftfreq(len(fft1), 1 / RATE)
     abs_fft = np.abs(fft1)
     # change values (abs_fft[5:50]) in frequency band freqz[5:50] if you changed ball or something else
     # print (abs_fft[5:50],freqz[5:50]
     result = len([x for x in abs_fft[5:50] if x >= 3000000])
-
-# change this value in if statement if you want bigger threshold
+    # change this value in if statement if you want bigger threshold
     if result > 15:
         detector_state.register_detection()
         print("'Wilson Trainer Tenis Ball' Detected!","Times:", detector_state.detections)
-
     plots_state.set_raw_data(data)
     plots_state.set_fft_data(freqz, abs_fft)
-
-
     # Show the updated plot, but without blocking
     plt.pause(0.01)
 
 
-# Open the connection and start streaming the data
-stream.start_stream()
+def main():
+    audio = pyaudio.PyAudio()
+    #start Recording
+    stream = audio.open(format=FORMAT,
+                        channels=CHANNELS,
+                        rate=RATE,
+                        input=True)
 
-print("| Press Ctrl+C to Break Recording |")
+    #frames_per_buffer=CHUNK)
 
-loop = True
-# Main Loop so program doesn't end while the stream is opened
-while loop:
-    try:
-        data = read_chunk()
-        process_data(data)
-    except KeyboardInterrupt:
-        loop = False
-    # except Exception as e:
-    #     print(e)
-    #     pass
+    detector_state = DetectorState()
+    plots_state = PlotsState()
+    # Open the connection and start streaming the data
+    stream.start_stream()
 
-stream.stop_stream()
-stream.close()
-audio.terminate()
+    print("| Press Ctrl+C to Break Recording |")
+
+    loop = True
+    # Main Loop so program doesn't end while the stream is opened
+    while loop:
+        try:
+            data = read_chunk(stream)
+            process_data(detector_state, plots_state, data)
+        except KeyboardInterrupt:
+            loop = False
+        # except Exception as e:
+        #     print(e)
+        #     pass
+
+    stream.stop_stream()
+    stream.close()
+    audio.terminate()
+
+if __name__ == '__main__':
+    main()
