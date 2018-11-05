@@ -1,3 +1,5 @@
+#!/bin/env python
+
 # Wilson - a ball that is dropped on the table if microphone is mounted near table.
 # The Ball generates specific sound between 100 - 500 Hz
 # I just wrote simple function to "catch" desired frequency at some threshold
