@@ -40,7 +40,7 @@ def read_chunk(stream):
 
     # There is some kind of overflow error in Raspberry uncomment if program does't work
     # in_data = stream.read(CHUNK, exeption_on_overflow=False)
-    
+
     in_data = stream.read(CHUNK)
     audio_data = np.fromstring(in_data, np.int16)
     return audio_data
