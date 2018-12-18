@@ -1,13 +1,24 @@
 #!/usr/bin/env python
-# Wilson - a ball that is dropped on the table if microphone is mounted near table.
-# The Ball generates specific sound between 100 - 500 Hz
-# I just wrote simple function to "catch" desired frequency at some threshold
-# Main advantage that is not a "CPU eater" for Raspberry Pi
 
+"""
+Wilson - a ball that is dropped on the table if microphone is mounted near table.
+The Ball generates specific sound between 100 - 500 Hz
+I just wrote simple function to "catch" desired frequency at some threshold
+Main advantage that is not a "CPU eater" for Raspberry Pi
+"""
 try:
     print("Loading libraries please stand by...")
     import pyaudio
     import numpy as np
+
+    # for raspberry
+    # uncomement below if you use Raspberry Pi
+
+    # import matplotlib
+    # matplotlib.use("TkAgg")
+
+    # keep calm and install - sudo apt-get install python3-tk ;)
+
     import matplotlib.pyplot as plt
     from scipy.io import wavfile
     from scipy import signal
@@ -26,6 +37,10 @@ CHUNK = 4096  # 8192 bytes of data read from a buffer
 
 
 def read_chunk(stream):
+
+    # There is some kind of overflow error in Raspberry uncomment if program does't work
+    # in_data = stream.read(CHUNK, exeption_on_overflow=False)
+
     in_data = stream.read(CHUNK)
     audio_data = np.fromstring(in_data, np.int16)
     return audio_data
