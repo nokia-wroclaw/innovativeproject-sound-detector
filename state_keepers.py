@@ -13,7 +13,7 @@ class DetectorState():
     
     def register_detection(self):
         self.__detections += 1
-    
+
     @property
     def detections(self):
         return self.__detections
