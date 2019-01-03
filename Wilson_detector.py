@@ -42,7 +42,7 @@ def read_chunk(stream):
     # in_data = stream.read(CHUNK, exeption_on_overflow=False)
 
     in_data = stream.read(CHUNK)
-    audio_data = np.fromstring(in_data, np.int16)
+    audio_data = np.frombuffer(in_data, np.int16)  # as np.fromstring() is deprecated, I changed it to np.frombuffer()
     return audio_data
 
 
