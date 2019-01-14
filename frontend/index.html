@@ -15,41 +15,50 @@
     #main {margin-left: 120px}
     /* Remove margins from "page content" on small screens */
     @media only screen and (max-width: 600px) {#main {margin-left: 0}}
-    .nokia-colors {
+    .nokia-bg {
         background-color: #124191!important;
     }
+    .nokia-text {
+        color: #124191!important;
+    }
+    .nokia-bgwhite {
+        background-color: white;
+    }
+    .nokia-textwhite {
+        color: white;
+    }
 </style>
-<body class="w3-blue-grey">
+<body class="w3-light-gray">
 
 <!-- Icon Bar (Sidebar - hidden on small screens) -->
-<nav class="w3-sidebar w3-bar-block w3-small w3-hide-small w3-center nokia-colors">
+<nav class="w3-sidebar w3-bar-block w3-small w3-hide-small w3-center nokia-bg">
     <!-- Avatar image in top left corner -->
-    <img src="/w3images/avatar_smoke.jpg" style="width:100%">
-    <a href="#" class="w3-bar-item w3-button w3-padding-large w3-hover-black">
-        <i class="fa fa-home w3-xxlarge"></i>
+    <img src="img/nokialogo.png" style="width:100%" class="nokia-bgwhite">
+    <a href="#" class="w3-bar-item w3-button w3-padding-large w3-hover-light-gray">
+        <i class="fa fa-home w3-xxlarge nokia-textwhite"></i>
         <p>HOME</p>
     </a>
-    <a href="#about" class="w3-bar-item w3-button w3-padding-large w3-hover-black">
-        <i class="fa fa-user w3-xxlarge"></i>
+    <a href="#about" class="w3-bar-item w3-button w3-padding-large w3-hover-light-gray">
+        <i class="fa fa-user w3-xxlarge nokia-textwhite"></i>
         <p>ABOUT</p>
     </a>
-    <a href="#photos" class="w3-bar-item w3-button w3-padding-large w3-hover-black">
-        <i class="fa fa-eye w3-xxlarge"></i>
+    <a href="#photos" class="w3-bar-item w3-button w3-padding-large w3-hover-light-gray">
+        <i class="fa fa-eye w3-xxlarge nokia-textwhite"></i>
         <p>STATS</p>
     </a>
-    <a href="#contact" class="w3-bar-item w3-button w3-padding-large w3-hover-black">
-        <i class="fa fa-envelope w3-xxlarge"></i>
+    <a href="#contact" class="w3-bar-item w3-button w3-padding-large w3-hover-light-gray">
+        <i class="fa fa-envelope w3-xxlarge nokia-textwhite"></i>
         <p>CONTACT</p>
     </a>
 </nav>
 
 <!-- Navbar on small screens (Hidden on medium and large screens) -->
 <div class="w3-top w3-hide-large w3-hide-medium" id="myNavbar">
-    <div class="w3-bar nokia-colors w3-opacity w3-hover-opacity-off w3-center w3-small">
-        <a href="#" class="w3-bar-item w3-button" style="width:25% !important">HOME</a>
-        <a href="#about" class="w3-bar-item w3-button" style="width:25% !important">STATS</a>
-        <a href="#photos" class="w3-bar-item w3-button" style="width:25% !important">ABOUT</a>
-        <a href="#contact" class="w3-bar-item w3-button" style="width:25% !important">CONTACT</a>
+    <div class="w3-bar nokia-bg w3-opacity w3-hover-opacity-off w3-center w3-small">
+        <a href="#" class="w3-bar-item w3-button nokia-textwhite" style="width:25% !important">HOME</a>
+        <a href="#about" class="w3-bar-item w3-button nokia-textwhite" style="width:25% !important">STATS</a>
+        <a href="#photos" class="w3-bar-item w3-button nokia-textwhite" style="width:25% !important">ABOUT</a>
+        <a href="#contact" class="w3-bar-item w3-button nokia-textwhite" style="width:25% !important">CONTACT</a>
     </div>
 </div>
 
@@ -57,30 +66,27 @@
 <div class="w3-padding-large" id="main">
     <!-- Header/Home -->
     <header class="w3-container w3-padding-32 w3-center" id="home">
-        <h1 class="w3-jumbo"><span class="w3-hide-small"></span> WILSON DETECTOR </h1>
+        <h1 class="w3-jumbo nokia-text"><span class="w3-hide-small"></span> WILSON DETECTOR </h1>
         <p>NOKIA Innovative Projects - Winter 2018 Edition</p>
-        <img src="" alt="logo" class="w3-image" width="992" height="1108">
-        <!-- End of Header/Home -->
+        
+        <h2 class="w3-jumbo nokia-text"> Piłkarzyki są: <span>
+            <!-- Wolne od... -->
+            <i class="fa fa-play" style="color:green"></i>
+            /
+            <!-- Zajęte od... -->
+            <i class="fa fa-stop" style="color:red"></i>
 
-            <h2 class="w3-jumbo"> Piłkarzyki są: <span>
-                <!-- Wolne od... -->
-                <i class="fa fa-play" style="color:green"></i>
-                /
-                <!-- Zajęte od... -->
-                <i class="fa fa-stop" style="color:red"></i>
+        </span></h2>
 
-            </span></h2>
-
-        <!-- End of Header/Home -->
-
+        <img src="img/Object_and_mic.JPG" alt="wilson" class="w3-image" style="opacity:75%" >
     <!-- End of Header/Home -->
     </header>
 
     <!-- About Section -->
-    <div class="w3-content w3-justify w3-text-grey w3-padding-64" id="about">
-        <h2 class="w3-text-light-grey">About</h2>
+    <div class="w3-content w3-justify nokia-text w3-padding-64" id="about">
+        <h2 class="nokia-text">About</h2>
         <hr style="width:200px" class="w3-opacity">
-        <p class="w3-text-light-grey">
+        <p class="nokia-text">
             Krótko o nas i celu projektu
         </p>
 
@@ -89,23 +95,17 @@
 
     <!-- Stats Section -->
     <div class="w3-padding-64 w3-content" id="photos">
-        <h2 class="w3-text-light-grey">STATISTICS</h2>
+        <h2 class="nokia-text">STATISTICS</h2>
         <hr style="width:200px" class="w3-opacity">
 
         <!-- Grid for stats -->
         <div class="w3-row-padding" style="margin:0 -16px">
 
-            <h2>Responsive Table</h2>
             <div class="w3-responsive">
-                <table class="w3-table-all" style="color:black">
+                <table class="w3-table-all nokia-text" style="color:white">
                     <tr>
                         <th>First Name</th>
                         <th>Last Name</th>
-                        <th>Points</th>
-                        <th>Points</th>
-                        <th>Points</th>
-                        <th>Points</th>
-                        <th>Points</th>
                         <th>Points</th>
                         <th>Points</th>
                     </tr>
@@ -114,20 +114,10 @@
                         <td>Smith</td>
                         <td>50</td>
                         <td>50</td>
-                        <td>50</td>
-                        <td>50</td>
-                        <td>50</td>
-                        <td>50</td>
-                        <td>50</td>
                     </tr>
                     <tr>
                         <td>Eve</td>
                         <td>Jackson</td>
-                        <td>94</td>
-                        <td>94</td>
-                        <td>94</td>
-                        <td>94</td>
-                        <td>94</td>
                         <td>94</td>
                         <td>94</td>
                     </tr>
@@ -136,18 +126,12 @@
                         <td>Johnson</td>
                         <td>67</td>
                         <td>67</td>
-                        <td>67</td>
-                        <td>67</td>
-                        <td>67</td>
-                        <td>67</td>
-                        <td>67</td>
                     </tr>
                 </table>
             </div>
 
-            <div class="w3-panel w3-red">
-                <p>A responsive table will display a horizontal scroll bar if the screen is too small to display the full content.</p>
-                <p>Resize the screen to see the effect.</p>
+            <div class="w3-panel w3-red nokia-text">
+                <p>In future there will be daily/weekly statistics of usage.</p>
             </div>
 
         <!-- End stats grid -->
@@ -156,33 +140,36 @@
     </div>
 
     <!-- Contact Section -->
-    <div class="w3-padding-64 w3-content w3-text-grey" id="contact">
-        <h2 class="w3-text-light-grey">Contact Me</h2>
+    <div class="w3-padding-64 w3-content nokia-text" id="contact">
+        <h2 class="nokia-text">Contact Us</h2>
         <hr style="width:200px" class="w3-opacity">
 
         <div class="w3-section">
-            <p><i class="fa fa-map-marker fa-fw w3-text-white w3-xxlarge w3-margin-right"></i> Chicago, US</p>
-            <p><i class="fa fa-phone fa-fw w3-text-white w3-xxlarge w3-margin-right"></i> Phone: +00 151515</p>
-            <p><i class="fa fa-envelope fa-fw w3-text-white w3-xxlarge w3-margin-right"> </i> Email: mail@mail.com</p>
+            <p><i class="nokia-text fa fa-map-marker fa-fw w3-text-white w3-xxlarge w3-margin-right"></i> Chicago, US</p>
+            <p><i class="nokia-text fa fa-phone fa-fw w3-text-white w3-xxlarge w3-margin-right"></i> Phone: +00 151515</p>
+            <p><i class="nokia-text fa fa-envelope fa-fw w3-text-white w3-xxlarge w3-margin-right"> </i> Email: mail@mail.com</p>
         </div><br>
-        <p>Lets get in touch. Send me a message:</p>
-
+        <p>Lets get in touch. Send us a message:</p>
+        
+        <!--
         <form action="/action_page.php" target="_blank">
             <p><input class="w3-input w3-padding-16" type="text" placeholder="Name" required name="Name"></p>
             <p><input class="w3-input w3-padding-16" type="text" placeholder="Email" required name="Email"></p>
             <p><input class="w3-input w3-padding-16" type="text" placeholder="Subject" required name="Subject"></p>
             <p><input class="w3-input w3-padding-16" type="text" placeholder="Message" required name="Message"></p>
             <p>
-                <button class="w3-button w3-light-grey w3-padding-large" type="submit">
-                    <i class="fa fa-paper-plane"></i> SEND MESSAGE
+                <button class="w3-button w3-light-grey w3-padding-large nokia-text" type="submit">
+                    <i class="nokia-text fa fa-paper-plane"></i> SEND MESSAGE
                 </button>
             </p>
         </form>
+        -->
+
         <!-- End Contact Section -->
     </div>
 
     <!-- Footer -->
-    <footer class="w3-content w3-padding-64 w3-text-grey w3-xlarge">
+    <footer class="w3-content w3-padding-64 nokia-text w3-xlarge">
         <i class="fa fa-facebook-official w3-hover-opacity"></i>
         <i class="fa fa-instagram w3-hover-opacity"></i>
         <i class="fa fa-snapchat w3-hover-opacity"></i>
