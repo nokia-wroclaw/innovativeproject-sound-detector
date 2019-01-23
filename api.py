@@ -1,9 +1,13 @@
 from flask import Flask
 from time import time
+import os
 
 from stack import Stack
 
-app = Flask(__name__)
+app = Flask(__name__,
+            static_url_path='', 
+            static_folder='frontend')
+
 stack = Stack()
 
 treshold = 5 * 60

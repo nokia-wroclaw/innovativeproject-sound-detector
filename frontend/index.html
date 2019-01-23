@@ -6,6 +6,28 @@
 <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Montserrat">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<script src="https://code.jquery.com/jquery-3.3.1.min.js" crossorigin="anonymous"></script>
+<script>
+
+function displayStatus(status){
+    if(status === "taken") {
+        $("#available").hide()
+        $("#taken").show()
+    } else {
+        $("#available").show()
+        $("#taken").hide()
+    }
+}
+
+$(function(){
+    $.get("/status").then(displayStatus)
+    setInterval(function(){
+        $.get("/status").then(displayStatus)
+    }, 5000)
+})
+
+
+</script>
 <style>
     body, h1,h2,h3,h4,h5,h6 {font-family: "Montserrat", sans-serif}
     .w3-row-padding img {margin-bottom: 12px}
@@ -71,10 +93,10 @@
         
         <h2 class="w3-jumbo nokia-text"> Piłkarzyki są: <span>
             <!-- Wolne od... -->
-            <i class="fa fa-play" style="color:green"></i>
-            /
+            <i class="fa fa-play" id="available" style="color:green"></i>
+            
             <!-- Zajęte od... -->
-            <i class="fa fa-stop" style="color:red"></i>
+            <i class="fa fa-stop" id="taken" style="color:red"></i>
 
         </span></h2>
 
