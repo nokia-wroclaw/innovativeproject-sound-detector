@@ -25,6 +25,7 @@ try:
     import wave
     from scipy.fftpack import fft
     from state_keepers import PlotsState, DetectorState
+    import requests
     print("Done.")
 except KeyboardInterrupt:
     print("You dont have nescessary libraries")
@@ -34,7 +35,7 @@ FORMAT = pyaudio.paInt16  # We use 16 bit format per sample
 CHANNELS = 1
 RATE = 44100
 CHUNK = 4096  # 8192 bytes of data read from a buffer
-
+backend = "http://localhost:5000"
 
 def read_chunk(stream):
 
@@ -56,6 +57,7 @@ def process_data(detector_state, plots_state, data):
     # change this value in if statement if you want bigger threshold
     if result > 15:
         detector_state.register_detection()
+        requests.get(backend+"/knock")
         print("'Wilson Trainer Tenis Ball' Detected!","Times:", detector_state.detections)
     plots_state.set_raw_data(data)
     plots_state.set_fft_data(freqz, abs_fft)

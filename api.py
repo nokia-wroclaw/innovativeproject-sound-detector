@@ -1,43 +1,26 @@
-from flask import Flask, request
-from Wilson_detector import process_data
-from state_keepers import DetectorState, PlotsState
+from flask import Flask
+from time import time
+
+from stack import Stack
 
 app = Flask(__name__)
+stack = Stack()
 
-@app.route("/")
-def welcome():
-    return "Witaj uzytkowniku!"
+treshold = 5 * 60
+not_less_than = 10
 
+@app.route("/knock", methods=["GET"])
+def set():
+    stack.knock()
+    return "knock"
 
-czy_ktos_gra = DetectorState()
-
-
-@app.route("/gra/<stan>", methods=["GET"])
-def set(stan):
-    global czy_ktos_gra
-    czy_ktos_gra = stan == "tak"
-    return "ustawiono na {}".format(czy_ktos_gra)
-
-
-@app.route("/stan", methods=["GET"])
+@app.route("/status", methods=["GET"])
 def get():
-    #request.json()
-    return "Pilkazyki zajete? {}".format("tak" if czy_ktos_gra else "nie")
-
+    now = time()
+    witin_5_minutes = [t for t in stack.history if now - t < treshold]
+    if len(witin_5_minutes) >= not_less_than:
+        return "taken"
+    return "free"
 
 if __name__ == "__main__":
     app.run()
-
-# def memoize(f)
-#     pamiec = {}
-#     def wrapped(*args, **kwargs):
-#         if istnieje:
-#             return pamiec[args+kwargs]
-#         else:
-#             pamiec[args+kwargs] = f(args, kwargs)
-#             return pamiec[args+kwargs]
-#     return wrapped
-
-# @memoize
-# def test(x):
-#     return x**(1/2)
